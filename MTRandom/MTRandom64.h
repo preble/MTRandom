@@ -3,16 +3,16 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MTRandom : NSObject <NSCoding, NSCopying>
+@interface MTRandom64 : NSObject <NSCoding, NSCopying>
 
 // Initialize with a given seed value.  This is the designated initializer
-- (id) initWithSeed:(uint32_t)seed;
+- (id) initWithSeed:(uint64_t)seed;
 
 // Seed the generator with the current time.
 - (id) init;
 
-// generates a random number on [0,0xffffffff]-interval
-- (uint32_t) randomUInt32;
+// generates a random number on [0,0xffffffffffffffff] interval
+- (uint64_t) randomUInt64;
 
 // generates a random number on [0,1]-real-interval
 - (double) randomDouble;
@@ -22,18 +22,18 @@
 
 @end
 
-@interface MTRandom (Extras)
+@interface MTRandom64 (Extras)
 
 - (BOOL) randomBool;
 
-- (uint32_t) randomUInt32From:(uint32_t)start to:(uint32_t)stop;
+- (uint64_t) randomUInt64From:(uint64_t)start to:(uint64_t)stop;
 
 - (double) randomDoubleFrom:(double)start to:(double)stop;
 
 @end
 
-@interface NSArray (MTRandom)
+@interface NSArray (MTRandom64)
 
-- (id) mt_randomObjectWithRandom:(MTRandom *)r;
+- (id) mt_randomObjectWithRandom:(MTRandom64 *)r;
 
 @end

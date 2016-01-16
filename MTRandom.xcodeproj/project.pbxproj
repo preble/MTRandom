@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4138808117A3475400FB55B5 /* MTRandom64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4138808017A3475400FB55B5 /* MTRandom64.m */; };
+		4138808317A3476100FB55B5 /* mtrandom64Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4138808217A3475D00FB55B5 /* mtrandom64Tests.m */; };
 		6698DF8015F41C9B00B74390 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6698DF7F15F41C9B00B74390 /* SenTestingKit.framework */; };
 		6698DF8715F41C9B00B74390 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6698DF8515F41C9B00B74390 /* InfoPlist.strings */; };
 		6698DF8A15F41C9B00B74390 /* MTRandomTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6698DF8915F41C9B00B74390 /* MTRandomTests.m */; };
@@ -14,6 +16,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4138807F17A3475400FB55B5 /* MTRandom64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTRandom64.h; sourceTree = "<group>"; };
+		4138808017A3475400FB55B5 /* MTRandom64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTRandom64.m; sourceTree = "<group>"; };
+		4138808217A3475D00FB55B5 /* mtrandom64Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = mtrandom64Tests.m; sourceTree = "<group>"; };
 		6698DF5B15F4103400B74390 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6698DF7E15F41C9B00B74390 /* MTRandomTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MTRandomTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6698DF7F15F41C9B00B74390 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -70,6 +75,7 @@
 		6698DF8215F41C9B00B74390 /* MTRandomTests */ = {
 			isa = PBXGroup;
 			children = (
+				4138808217A3475D00FB55B5 /* mtrandom64Tests.m */,
 				6698DF8815F41C9B00B74390 /* MTRandomTests.h */,
 				6698DF8915F41C9B00B74390 /* MTRandomTests.m */,
 				6698DF8315F41C9B00B74390 /* Supporting Files */,
@@ -90,6 +96,8 @@
 		6698DF9015F4449300B74390 /* MTRandom */ = {
 			isa = PBXGroup;
 			children = (
+				4138807F17A3475400FB55B5 /* MTRandom64.h */,
+				4138808017A3475400FB55B5 /* MTRandom64.m */,
 				6698DF9615F4452100B74390 /* MTRandom.h */,
 				6698DF9715F4452100B74390 /* MTRandom.m */,
 			);
@@ -175,8 +183,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4138808117A3475400FB55B5 /* MTRandom64.m in Sources */,
 				6698DF8A15F41C9B00B74390 /* MTRandomTests.m in Sources */,
 				6698DF9815F4452100B74390 /* MTRandom.m in Sources */,
+				4138808317A3476100FB55B5 /* mtrandom64Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

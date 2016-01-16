@@ -48,34 +48,34 @@
  */
 
 /* Period parameters */
-#define N 624
-#define M 397
-#define MATRIX_A 0x9908b0dfUL   /* constant vector a */
-#define UPPER_MASK 0x80000000UL /* most significant w-r bits */
-#define LOWER_MASK 0x7fffffffUL /* least significant r bits */
+#define N 312
+#define M 156
+#define MATRIX_A 0xB5026F5AA96619E9ULL   /* constant vector a */
+#define UPPER_MASK 0xFFFFFFFF80000000ULL /* most significant w-r bits */
+#define LOWER_MASK 0x7FFFFFFFULL /* least significant r bits */
 
-#import "MTRandom.h"
+#import "MTRandom64.h"
 
-@interface MTRandom () {
-    uint32_t mt[N];
-    uint32_t mti;
+@interface MTRandom64 () {
+    uint64_t mt[N];
+    uint64_t mti;
 }
 
 @end
 
-@implementation MTRandom
+@implementation MTRandom64
 
 #pragma mark -
 #pragma mark init
 
 - (id) init
 {
-    uint32_t seed = (uint32_t)[NSDate timeIntervalSinceReferenceDate];
+    uint64_t seed = (uint64_t)[NSDate timeIntervalSinceReferenceDate];
     return [self initWithSeed:seed];
 }
 
 
-- (id) initWithSeed:(uint32_t)seed
+- (id) initWithSeed:(uint64_t)seed
 {
     self = [super init];
     if (self != nil)
@@ -93,7 +93,7 @@
 {
     if ( (self = [super init]) )
     {
-        mti = (uint32_t)[coder decodeIntegerForKey : @"mti"];
+        mti = (uint64_t)[coder decodeIntegerForKey : @"mti"];
 
         NSArray *arr = [coder decodeObjectForKey:@"mt"];
         if (!arr)
@@ -107,7 +107,7 @@
         }
 
         [arr enumerateObjectsUsingBlock: ^(id obj, NSUInteger idx, BOOL *stop) {
-             mt[idx] = (uint32_t)[obj unsignedIntegerValue];
+             mt[idx] = (uint64_t)[obj unsignedIntegerValue];
          }
 
 
@@ -136,16 +136,16 @@
 
 - (id) copyWithZone:(NSZone *)zone
 {
-    MTRandom *r = [[[self class] allocWithZone:zone] init];
+    MTRandom64 *r = [[[self class] allocWithZone:zone] init];
     r->mti = mti;
-    memcpy(r->mt, mt, sizeof(uint32_t) * N);
+    memcpy(r->mt, mt, sizeof(uint64_t) * N);
     return r;
 }
 
 
 #pragma mark - Mersenne Twister
 
-- (void) seed:(uint32_t)s
+- (void) seed:(uint64_t)s
 {
     mt[0] = s & 0xffffffffUL;
     for (mti = 1; mti < N; mti++)
@@ -158,17 +158,17 @@
            only MSBs of the array mt[].
            2002/01/09 modified by Makoto Matsumoto
          */
-        mt[mti] &= 0xffffffffUL;
-        /* for >32 bit machines */
+        mt[mti] &= 0xffffffffffffffffUL;
+        /* for >64 bit machines */
     }
 }
 
 
 // generates a random number on [0,0xffffffff]-interval
-- (uint32_t) randomUInt32
+- (uint64_t) randomUInt64
 {
-    uint32_t y;
-    static uint32_t mag01[2] = {0x0UL, MATRIX_A};
+    uint64_t y;
+    static uint64_t mag01[2] = {0x0UL, MATRIX_A};
     /* mag01[x] = x * MATRIX_A  for x=0,1 */
 
     if (mti >= N)   /* generate N words at one time */
@@ -215,16 +215,16 @@
 /* generates a random number on [0,1]-real-interval */
 - (double) randomDouble
 {
-    return [self randomUInt32] * (1.0 / 4294967295.0);
-    /* divided by 2^32-1 */
+    return [self randomUInt64] * (1.0 / 18446744073709551615.0);
+    /* divided by 2^64-1 */
 }
 
 
 /* generates a random number on [0,1)-real-interval */
 - (double) randomDouble0To1Exclusive
 {
-    return [self randomUInt32] * (1.0 / 4294967296.0);
-    /* divided by 2^32 */
+    return [self randomUInt64] * (1.0 / 18446744073709551616.0);
+    /* divided by 2^64 */
 }
 
 
@@ -232,15 +232,16 @@
 
 #pragma mark -
 
-@implementation MTRandom (Extras)
+@implementation MTRandom64 (Extras)
 
 - (BOOL) randomBool
 {
-    return [self randomUInt32] < 2147483648;
+    return ([self randomUInt64] / 2) < 2147483648;
+//	return [self randomUInt64] < 18446744073709551616;// <-64 | 32-> 2147483648;
 }
 
 
-- (uint32_t) randomUInt32From:(uint32_t)start to:(uint32_t)stop
+- (uint64_t) randomUInt64From:(uint64_t)start to:(uint64_t)stop
 {
     NSUInteger width = 1 + stop - start;
 
@@ -262,9 +263,9 @@
 
 @implementation NSArray (MTRandom)
 
-- (id) mt_randomObjectWithRandom:(MTRandom *)r
+- (id) mt_randomObjectWithRandom:(MTRandom64 *)r
 {
-    return [self objectAtIndex:[r randomUInt32From:0 to:(uint32_t)self.count - 1]];
+    return [self objectAtIndex:[r randomUInt64From:0 to:(uint64_t)self.count - 1]];
 }
 
 
